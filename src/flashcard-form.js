@@ -4,7 +4,7 @@ export default class FlashcardForm extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid w-50 border border-dark p-4 rounded">
+      <div className="container-fluid w-50 p-4 rounded">
         <form onSubmit={this.props.saveFlashcard}>
           <h3 className="pb-3">Create a Flash Card</h3>
           <div className="form-group">
