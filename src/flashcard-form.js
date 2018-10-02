@@ -8,15 +8,15 @@ export default class FlashcardForm extends React.Component {
         <form onSubmit={this.props.saveFlashcard}>
           <h3 className="pb-3">Create a Flash Card</h3>
           <div className="form-group">
-            <label htmlFor="formGroupExampleInput">Question</label>
-            <input type="text" className="form-control" name="currentQuestion" id="currentQuestion" placeholder="Enter question" />
+            <label htmlFor="currentQuestion">Question</label>
+            <input type="text" className="form-control" name="currentQuestion" placeholder="Enter question" />
           </div>
           <div className="form-group">
-            <label htmlFor="formGroupExampleInput2">Answer</label>
-            <input type="text" className="form-control" name="currentAnswer" id="currentAnswer" placeholder="Enter answer" />
+            <label htmlFor="currentAnswer">Answer</label>
+            <input type="text" className="form-control" name="currentAnswer" placeholder="Enter answer" />
           </div>
           <div className="d-flex justify-content-center p-2">
-            <button type="submit" className="btn btn-outline-dark">Save</button>
+            <button type="submit" className="btn btn-dark">Save</button>
           </div>
         </form>
       </div>
