@@ -10,13 +10,18 @@ export default class App extends React.Component {
     this.saveFlashcard = this.saveFlashcard.bind(this)
   }
 
-  saveFlashcard(question, answer) {
+  saveFlashcard(event) {
+    event.preventDefault()
+    const newCard = {
+      question: event.target.currentQuestion.value,
+      answer: event.target.currentAnswer.value
+    }
     const flashcards = this.state.flashcards.map((card) =>
       Object.assign({}, card)
     )
-    const newCard = { question, answer }
     flashcards.push(newCard)
     this.setState({ flashcards })
+    event.target.reset()
   }
 
   render() {
