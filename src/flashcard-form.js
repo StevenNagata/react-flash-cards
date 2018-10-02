@@ -1,11 +1,24 @@
 import React from 'react'
 
 export default class FlashcardForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.saveCard = this.saveCard.bind(this)
+  }
+  saveCard(event) {
+    event.preventDefault()
+    const newCard = {
+      question: event.target.currentQuestion.value,
+      answer: event.target.currentAnswer.value
+    }
+    event.target.reset()
+    this.props.saveFlashcard(newCard)
+  }
 
   render() {
     return (
       <div className="container-fluid w-50 p-4 rounded">
-        <form onSubmit={this.props.saveFlashcard}>
+        <form onSubmit={this.saveCard}>
           <h3 className="pb-3">Create a Flash Card</h3>
           <div className="form-group">
             <label htmlFor="currentQuestion">Question</label>
