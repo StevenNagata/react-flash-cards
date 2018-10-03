@@ -11,7 +11,7 @@ export default class App extends React.Component {
     const appState = JSON.parse(stateJson) || {}
     const path = hash.parse(location.hash).path
     this.state = {
-      view: appState.path || { path },
+      view: { path },
       flashcards: appState.flashcards || []
     }
     this.saveFlashcard = this.saveFlashcard.bind(this)
@@ -39,8 +39,8 @@ export default class App extends React.Component {
       })
     })
     window.addEventListener('beforeunload', () => {
-      const { view, flashcards } = this.state
-      const stateJson = JSON.stringify({ view, flashcards })
+      const { flashcards } = this.state
+      const stateJson = JSON.stringify({ flashcards })
       localStorage.setItem('current-app-state', stateJson)
     })
   }
