@@ -6,7 +6,7 @@ export default function NoFlashcard(props) {
       <div>
         <h3>You have no flash cards</h3>
         <div className="container-fluid d-flex justify-content-center">
-          <a href="#create"><button onClick={props.takeToForm} type="button" className="btn btn-dark">Create flash cards</button></a>
+          <a className="btn btn-dark" href="#create">Create flash cards</a>
         </div>
       </div>
     </div>
