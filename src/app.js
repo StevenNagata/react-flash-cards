@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from './nav-bar'
+import MyFlashcards from './my-flashcards'
 import FlashcardForm from './flashcard-form'
 
 export default class App extends React.Component {
@@ -24,6 +25,7 @@ export default class App extends React.Component {
       <div>
         <Navbar />
         <FlashcardForm saveFlashcard={saveFlashcard} />
+        <MyFlashcards flashcards={this.state.flashcards}/>
       </div>
     )
   }
