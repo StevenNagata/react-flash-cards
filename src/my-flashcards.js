@@ -19,6 +19,7 @@ export default class MyFlashcards extends React.Component {
                     <div className="card-body">
                       <p className="card-text m-1">Q: {card.question}</p>
                       <p className="card-text m-1">A: {card.answer}</p>
+                      <a className="float-right" href="#edit">&#9997;</a>
                     </div>
                   </div>
                 )
