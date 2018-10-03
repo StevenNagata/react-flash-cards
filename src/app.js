@@ -1,4 +1,5 @@
 import React from 'react'
+import Navbar from './nav-bar'
 import FlashcardForm from './flashcard-form'
 
 export default class App extends React.Component {
@@ -20,7 +21,10 @@ export default class App extends React.Component {
   render() {
     const { saveFlashcard } = this
     return (
-      <FlashcardForm saveFlashcard={saveFlashcard} />
+      <div>
+        <Navbar />
+        <FlashcardForm saveFlashcard={saveFlashcard} />
+      </div>
     )
   }
 }
