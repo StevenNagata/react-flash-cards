@@ -7,9 +7,9 @@ import FlashcardForm from './flashcard-form'
 export default class App extends React.Component {
   constructor(props) {
     super(props)
-    const currentPath = hash.parse(location.hash)
+    const path = hash.parse(location.hash).path
     this.state = {
-      view: { path: currentPath.path },
+      view: { path },
       flashcards: []
     }
     this.saveFlashcard = this.saveFlashcard.bind(this)
