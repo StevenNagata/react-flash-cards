@@ -11,9 +11,7 @@ export default class App extends React.Component {
   }
 
   saveFlashcard(newCard) {
-    const flashcards = this.state.flashcards.map((card) =>
-      Object.assign({}, card)
-    )
+    const flashcards = this.state.flashcards.slice()
     flashcards.push(newCard)
     this.setState({ flashcards })
     event.target.reset()
