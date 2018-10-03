@@ -8,10 +8,25 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      view: {},
+      view: { path: 'view' },
       flashcards: []
     }
     this.saveFlashcard = this.saveFlashcard.bind(this)
+    this.takeToForm = this.takeToForm.bind(this)
+  }
+  takeToForm() {
+    this.setState({
+      view: { path: 'create' }
+    })
+  }
+  renderView() {
+    const { path } = this.state.view
+    switch (path) {
+      case 'create':
+        return <FlashcardForm saveFlashcard={this.saveFlashcard} />
+      default:
+        return <MyFlashcards flashcards={this.state.flashcards} takeToForm={this.takeToForm} />
+    }
   }
   componentDidMount() {
     window.addEventListener('hashchange', () => {
@@ -28,12 +43,10 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { saveFlashcard } = this
     return (
       <div>
         <Navbar />
-        <FlashcardForm saveFlashcard={saveFlashcard} />
-        <MyFlashcards flashcards={this.state.flashcards} />
+        {this.renderView()}
       </div>
     )
   }
