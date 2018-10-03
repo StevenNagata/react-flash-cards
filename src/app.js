@@ -36,6 +36,11 @@ export default class App extends React.Component {
         view: { path }
       })
     })
+    window.addEventListener('beforeunload', () => {
+      const { view, flashcards } = this.state
+      const stateJson = JSON.stringify({ view, flashcards })
+      localStorage.setItem('current-app-state', stateJson)
+    })
   }
   saveFlashcard(newCard) {
     const flashcards = this.state.flashcards.slice()
