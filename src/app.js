@@ -3,6 +3,7 @@ import Navbar from './nav-bar'
 import hash from './hash'
 import MyFlashcards from './my-flashcards'
 import FlashcardForm from './flashcard-form'
+import EditFlashcard from './edit-flashcard'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -27,6 +28,8 @@ export default class App extends React.Component {
     switch (path) {
       case 'create':
         return <FlashcardForm saveFlashcard={this.saveFlashcard} />
+      case 'edit':
+        return <EditFlashcard flashcards={this.state.flashcards} />
       default:
         return <MyFlashcards flashcards={this.state.flashcards} takeToForm={this.takeToForm} />
     }
