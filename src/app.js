@@ -7,10 +7,12 @@ import FlashcardForm from './flashcard-form'
 export default class App extends React.Component {
   constructor(props) {
     super(props)
+    const stateJson = localStorage.getItem('current-app-state')
+    const appState = JSON.parse(stateJson) || {}
     const path = hash.parse(location.hash).path
     this.state = {
-      view: { path },
-      flashcards: []
+      view: appState.path || { path },
+      flashcards: appState.flashcards || []
     }
     this.saveFlashcard = this.saveFlashcard.bind(this)
     this.takeToForm = this.takeToForm.bind(this)
