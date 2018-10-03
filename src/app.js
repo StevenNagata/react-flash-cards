@@ -14,7 +14,6 @@ export default class App extends React.Component {
     const flashcards = this.state.flashcards.slice()
     flashcards.push(newCard)
     this.setState({ flashcards })
-    event.target.reset()
   }
 
   render() {
