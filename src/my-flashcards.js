@@ -1,6 +1,14 @@
 import React from 'react'
 import NoFlashcards from './no-flashcards'
 
+const style = {
+  editIcon: {
+    position: 'absolute',
+    right: '1rem',
+    bottom: '1rem'
+  }
+}
+
 export default class MyFlashcards extends React.Component {
   render() {
     if (this.props.flashcards.length === 0) {
@@ -13,12 +21,15 @@ export default class MyFlashcards extends React.Component {
         <div className="container p-2">
           <div className="row d-flex justify-content-center">
             {
-              this.props.flashcards.map((card, index) => {
+              this.props.flashcards.map((card) => {
+                const id = card.id
+                const href = `#edit?uniqueId=${id}`
                 return (
-                  <div key={index} className="card bg-light mb-3 m-3 w-25">
+                  <div id={id} key={id} className="card bg-light mb-3 m-3 w-25">
                     <div className="card-body">
-                      <p className="card-text m-1">Q: {card.question}</p>
-                      <p className="card-text m-1">A: {card.answer}</p>
+                      <p className="card-text m-1">{card.question}</p>
+                      <p className="card-text text-info m-1">{card.answer}</p>
+                      <a style={style.editIcon} href={href}>&#9999;</a>
                     </div>
                   </div>
                 )
