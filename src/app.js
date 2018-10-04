@@ -12,12 +12,14 @@ export default class App extends React.Component {
     const appState = JSON.parse(stateJson) || {}
     const path = hash.parse(location.hash).path
     const params = hash.parse(location.hash).params
+    const uniqueId = hash.parse(location.hash).uniqueId
     this.state = {
       view: {
         path: path,
         params: params
       },
-      flashcards: appState.flashcards || []
+      flashcards: appState.flashcards || [],
+      uniqueId: uniqueId || 0
     }
     this.saveFlashcard = this.saveFlashcard.bind(this)
     this.takeToForm = this.takeToForm.bind(this)
@@ -51,8 +53,8 @@ export default class App extends React.Component {
       })
     })
     window.addEventListener('beforeunload', () => {
-      const { view, flashcards } = this.state
-      const stateJson = JSON.stringify({ view, flashcards })
+      const { view, flashcards, uniqueId } = this.state
+      const stateJson = JSON.stringify({ view, flashcards, uniqueId })
       localStorage.setItem('current-app-state', stateJson)
     })
   }
