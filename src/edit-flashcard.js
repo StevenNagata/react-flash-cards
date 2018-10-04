@@ -7,7 +7,7 @@ export default class EditFlashcards extends React.Component {
   }
   saveEditedCard(event) {
     event.preventDefault()
-    const uniqueId = parseInt(this.props.params.uniqueId, 10)
+    const uniqueId = parseInt(this.props.flashcard.id, 10)
     const editedCard = {
       question: event.target.editedQuestion.value,
       answer: event.target.editedAnswer.value,
@@ -16,19 +16,18 @@ export default class EditFlashcards extends React.Component {
     this.props.saveEditedFlashcards(editedCard, uniqueId)
   }
   render() {
-    const { flashcards, params } = this.props
-    const currentEditFlashcard = flashcards.find(card => card.id === parseInt(params.uniqueId, 10))
+    const { flashcard } = this.props
     return (
       <div className="container-fluid w-50 p-4 rounded">
         <form onSubmit={this.saveEditedCard}>
           <h3 className="pb-3">Edit Flash Card</h3>
           <div className="form-group">
             <label htmlFor="currentQuestion">Question</label>
-            <input type="text" className="form-control" name="editedQuestion" defaultValue={currentEditFlashcard.question} />
+            <input type="text" className="form-control" name="editedQuestion" defaultValue={flashcard.question} />
           </div>
           <div className="form-group">
             <label htmlFor="currentAnswer">Answer</label>
-            <input type="text" className="form-control" name="editedAnswer" defaultValue={currentEditFlashcard.answer} />
+            <input type="text" className="form-control" name="editedAnswer" defaultValue={flashcard.answer} />
           </div>
           <div className="d-flex justify-content-center p-2">
             <button type="submit" className="btn btn-dark">Save</button>

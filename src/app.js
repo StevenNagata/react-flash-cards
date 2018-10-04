@@ -50,7 +50,8 @@ export default class App extends React.Component {
       case 'create':
         return <FlashcardForm saveFlashcard={this.saveFlashcard} uniqueId={this.state.uniqueId} />
       case 'edit':
-        return <EditFlashcard flashcards={this.state.flashcards} saveEditedFlashcards={this.saveEditedFlashcards} params={params} />
+        const flashcard = this.state.flashcards.find(card => card.id === parseInt(params.uniqueId, 10))
+        return <EditFlashcard flashcard={flashcard} saveEditedFlashcards={this.saveEditedFlashcards} />
       default:
         return <MyFlashcards flashcards={this.state.flashcards} takeToForm={this.takeToForm} editCard={this.editCard} />
     }
