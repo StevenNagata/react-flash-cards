@@ -13,7 +13,6 @@ export default class EditFlashcards extends React.Component {
       answer: event.target.editedAnswer.value,
       id: uniqueId
     }
-    console.log(editedCard)
     const { flashcards } = this.props
     const updatedFlashcards = flashcards.map(card => {
       if (card.id === uniqueId) {
@@ -28,7 +27,6 @@ export default class EditFlashcards extends React.Component {
   render() {
     const { flashcards, params } = this.props
     const currentEditFlashcard = flashcards.find(card => card.id === parseInt(params.uniqueId, 10))
-    console.log(currentEditFlashcard)
     return (
       <div className="container-fluid w-50 p-4 rounded">
         <form onSubmit={this.saveEditedCard}>
