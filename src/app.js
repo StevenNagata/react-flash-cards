@@ -24,6 +24,7 @@ export default class App extends React.Component {
     this.saveFlashcard = this.saveFlashcard.bind(this)
     this.takeToForm = this.takeToForm.bind(this)
     this.saveEditedFlashcards = this.saveEditedFlashcards.bind(this)
+    this.deleteCard = this.deleteCard.bind(this)
   }
   saveEditedFlashcards(editedCard) {
     const { flashcards } = this.state
@@ -44,16 +45,28 @@ export default class App extends React.Component {
       view: { path: 'create' }
     })
   }
+  deleteCard(id) {
+    const removedFlashcardArray = this.state.flashcards.filter(card => card.id !== id)
+    this.setState({ flashcards: removedFlashcardArray })
+  }
   renderView() {
     const { path, params } = this.state.view
     switch (path) {
       case 'create':
-        return <FlashcardForm saveFlashcard={this.saveFlashcard} uniqueId={this.state.uniqueId} />
+        return <FlashcardForm
+          saveFlashcard={this.saveFlashcard}
+          uniqueId={this.state.uniqueId} />
       case 'edit':
         const flashcard = this.state.flashcards.find(card => card.id === parseInt(params.uniqueId, 10))
-        return <EditFlashcard flashcard={flashcard} saveEditedFlashcards={this.saveEditedFlashcards} />
+        return <EditFlashcard
+          flashcard={flashcard}
+          saveEditedFlashcards={this.saveEditedFlashcards} />
       default:
-        return <MyFlashcards flashcards={this.state.flashcards} takeToForm={this.takeToForm} editCard={this.editCard} />
+        return <MyFlashcards
+          flashcards={this.state.flashcards}
+          takeToForm={this.takeToForm}
+          editCard={this.editCard}
+          deleteCard={this.deleteCard} />
     }
   }
   componentDidMount() {
@@ -77,7 +90,6 @@ export default class App extends React.Component {
       uniqueId: this.state.uniqueId + 1
     })
   }
-
   render() {
     return (
       <div>
