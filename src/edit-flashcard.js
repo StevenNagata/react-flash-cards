@@ -13,16 +13,7 @@ export default class EditFlashcards extends React.Component {
       answer: event.target.editedAnswer.value,
       id: uniqueId
     }
-    const { flashcards } = this.props
-    const updatedFlashcards = flashcards.map(card => {
-      if (card.id === uniqueId) {
-        return editedCard
-      }
-      else {
-        return card
-      }
-    })
-    this.props.saveEditedFlashcards(updatedFlashcards)
+    this.props.saveEditedFlashcards(editedCard, uniqueId)
   }
   render() {
     const { flashcards, params } = this.props

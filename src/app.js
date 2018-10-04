@@ -25,8 +25,18 @@ export default class App extends React.Component {
     this.takeToForm = this.takeToForm.bind(this)
     this.saveEditedFlashcards = this.saveEditedFlashcards.bind(this)
   }
-  saveEditedFlashcards(flashcards) {
-    this.setState({ flashcards })
+  saveEditedFlashcards(editedCard) {
+    const { flashcards } = this.state
+    const currentId = parseInt(this.state.view.params.uniqueId, 10)
+    const updatedFlashcards = flashcards.map(card => {
+      if (card.id === currentId) {
+        return editedCard
+      }
+      else {
+        return card
+      }
+    })
+    this.setState({ flashcards: updatedFlashcards })
     location.hash = '#view'
   }
   takeToForm() {
