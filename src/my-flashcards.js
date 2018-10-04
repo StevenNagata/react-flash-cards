@@ -6,6 +6,11 @@ const style = {
     position: 'absolute',
     right: '1rem',
     bottom: '1rem'
+  },
+  deleteIcon: {
+    position: 'absolute',
+    right: '1rem',
+    top: '1rem'
   }
 }
 
@@ -30,6 +35,7 @@ export default class MyFlashcards extends React.Component {
                       <p className="card-text m-1">{card.question}</p>
                       <p className="card-text text-info m-1">{card.answer}</p>
                       <a style={style.editIcon} href={href}>&#9999;</a>
+                      <a style={style.deleteIcon}>&#10007;</a>
                     </div>
                   </div>
                 )
