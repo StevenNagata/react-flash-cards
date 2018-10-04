@@ -24,10 +24,8 @@ export default class App extends React.Component {
     this.saveEditedFlashcards = this.saveEditedFlashcards.bind(this)
   }
   saveEditedFlashcards(flashcards) {
-    this.setState({
-      flashcards,
-      view: { path: 'view' }
-    })
+    this.setState({ flashcards })
+    location.hash = '#view'
   }
   takeToForm() {
     this.setState({
