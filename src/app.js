@@ -10,9 +10,9 @@ export default class App extends React.Component {
     super(props)
     const stateJson = localStorage.getItem('current-app-state')
     const appState = JSON.parse(stateJson) || {}
+    const uniqueId = appState.uniqueId
     const path = hash.parse(location.hash).path
     const params = hash.parse(location.hash).params
-    const uniqueId = hash.parse(location.hash).uniqueId
     this.state = {
       view: {
         path: path,
@@ -38,7 +38,7 @@ export default class App extends React.Component {
     const { path, params } = this.state.view
     switch (path) {
       case 'create':
-        return <FlashcardForm saveFlashcard={this.saveFlashcard} />
+        return <FlashcardForm saveFlashcard={this.saveFlashcard} uniqueId={this.state.uniqueId} />
       case 'edit':
         return <EditFlashcard flashcards={this.state.flashcards} saveEditedFlashcards={this.saveEditedFlashcards} params={params} />
       default:
@@ -53,15 +53,18 @@ export default class App extends React.Component {
       })
     })
     window.addEventListener('beforeunload', () => {
-      const { view, flashcards, uniqueId } = this.state
-      const stateJson = JSON.stringify({ view, flashcards, uniqueId })
+      const { flashcards, uniqueId } = this.state
+      const stateJson = JSON.stringify({ flashcards, uniqueId })
       localStorage.setItem('current-app-state', stateJson)
     })
   }
   saveFlashcard(newCard) {
     const flashcards = this.state.flashcards.slice()
     flashcards.push(newCard)
-    this.setState({ flashcards })
+    this.setState({
+      flashcards,
+      uniqueId: this.state.uniqueId + 1
+    })
   }
 
   render() {
