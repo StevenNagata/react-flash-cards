@@ -7,6 +7,7 @@ export default function Navbar() {
         <div className="navbar-nav">
           <a className="nav-item nav-link" href="#view">My Flashcards</a>
           <a className="nav-item nav-link" href="#create">Create Flashcard</a>
+          <a className="nav-item nav-link" href="#practice">Practice</a>
         </div>
       </div>
     </nav>
