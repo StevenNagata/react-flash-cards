@@ -7,13 +7,16 @@ export default class EditFlashcards extends React.Component {
   }
   saveEditedCard(event) {
     event.preventDefault()
+    const uniqueId = parseInt(this.props.params.uniqueId, 10)
     const editedCard = {
       question: event.target.editedQuestion.value,
-      answer: event.target.editedAnswer.value
+      answer: event.target.editedAnswer.value,
+      id: uniqueId
     }
-    const { flashcards, params } = this.props
-    const updatedFlashcards = flashcards.map((card, index) => {
-      if (index === parseInt(params.index, 10)) {
+    console.log(editedCard)
+    const { flashcards } = this.props
+    const updatedFlashcards = flashcards.map(card => {
+      if (card.id === uniqueId) {
         return editedCard
       }
       else {
@@ -24,8 +27,8 @@ export default class EditFlashcards extends React.Component {
   }
   render() {
     const { flashcards, params } = this.props
-    const editIndex = params.index
-    const currentEditFlashcard = flashcards[editIndex]
+    const currentEditFlashcard = flashcards.find(card => card.id === parseInt(params.uniqueId, 10))
+    console.log(currentEditFlashcard)
     return (
       <div className="container-fluid w-50 p-4 rounded">
         <form onSubmit={this.saveEditedCard}>
