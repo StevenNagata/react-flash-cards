@@ -4,6 +4,7 @@ import hash from './hash'
 import MyFlashcards from './my-flashcards'
 import FlashcardForm from './flashcard-form'
 import EditFlashcard from './edit-flashcard'
+import Practice from './practice'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -61,6 +62,8 @@ export default class App extends React.Component {
         return <EditFlashcard
           flashcard={flashcard}
           saveEditedFlashcards={this.saveEditedFlashcards} />
+      case 'practice':
+        return <Practice flashcards={this.state.flashcards} />
       default:
         return <MyFlashcards
           flashcards={this.state.flashcards}
