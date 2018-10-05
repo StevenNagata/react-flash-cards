@@ -21,9 +21,11 @@ export default class Practice extends React.Component {
     const carouselState = JSON.parse(stateJson) || {}
     const currentCardIndex = carouselState.currentCardIndex
     const showAnswer = carouselState.showAnswer
+    const progress = carouselState.progress
     this.state = {
       currentCardIndex: currentCardIndex || 0,
-      showAnswer: showAnswer || false
+      showAnswer: showAnswer || false,
+      progress: progress || 0
     }
     this.toggleAnswer = this.toggleAnswer.bind(this)
     this.previousCard = this.previousCard.bind(this)
@@ -31,24 +33,28 @@ export default class Practice extends React.Component {
   }
   componentDidMount() {
     window.addEventListener('beforeunload', () => {
-      const { currentCardIndex, showAnswer } = this.state
-      const stateJson = JSON.stringify({ currentCardIndex, showAnswer })
+      const { currentCardIndex, showAnswer, progress } = this.state
+      const stateJson = JSON.stringify({ currentCardIndex, showAnswer, progress })
       localStorage.setItem('current-carousel-state', stateJson)
     })
   }
   previousCard() {
-    const previousIndex = (this.state.currentCardIndex === 0) ? this.props.flashcards.length - 1 : this.state.currentCardIndex - 1
-    this.setState({
-      currentCardIndex: previousIndex,
-      showAnswer: false
-    })
+    if (this.state.currentCardIndex !== 0) {
+      this.setState({
+        currentCardIndex: this.state.currentCardIndex - 1,
+        showAnswer: false,
+        progress: this.state.progress - 1
+      })
+    }
   }
   nextCard() {
-    const nextIndex = (this.state.currentCardIndex === (this.props.flashcards.length - 1)) ? 0 : this.state.currentCardIndex + 1
-    this.setState({
-      currentCardIndex: nextIndex,
-      showAnswer: false
-    })
+    if (this.state.currentCardIndex !== (this.props.flashcards.length - 1)) {
+      this.setState({
+        currentCardIndex: this.state.currentCardIndex + 1,
+        showAnswer: false,
+        progress: this.state.currentCardIndex + 1
+      })
+    }
   }
   toggleAnswer() {
     this.setState({ showAnswer: !this.state.showAnswer })
