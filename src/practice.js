@@ -1,8 +1,15 @@
 import React from 'react'
 
 const style = {
-  arrow: {
-    'lineHeight': '280px'
+  arrowleft: {
+    position: 'absolute',
+    top: '150px',
+    left: '100px'
+  },
+  arrowright: {
+    position: 'absolute',
+    top: '150px',
+    right: '100px'
   }
 }
 export default class Practice extends React.Component {
@@ -50,14 +57,16 @@ export default class Practice extends React.Component {
     const anwserDisplay = showAnswer ? 'm-2' : 'd-none'
     const anwserButton = showAnswer ? 'Hide Answer' : 'Show Answer'
     return (
-      <div className="d-flex justify-content-center">
-        <a onClick={this.previousCard} href="#practice" className="m-2" style={style.arrow}>&#10094;</a>
+      <div className="d-flex justify-content-center position-relative">
+        <a onClick={this.previousCard} href="#practice" style={style.arrowleft}>&#10094;&#10094;</a>
         <div className="jumbotron w-75">
+
           <p>{flashcards[currentCardIndex].question}</p>
           <a onClick={this.toggleAnswer} className="m-2 btn btn-primary btn-sm" role="button">{anwserButton}</a>
           <p className={anwserDisplay}>{flashcards[currentCardIndex].answer}</p>
+
         </div>
-        <a onClick={this.nextCard} href="#practice" className="m-2" style={style.arrow}>&#10095;</a>
+        <a onClick={this.nextCard} href="#practice" style={style.arrowright}>&#10095;&#10095;</a>
       </div>
     )
   }
