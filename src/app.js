@@ -63,7 +63,7 @@ export default class App extends React.Component {
           flashcard={flashcard}
           saveEditedFlashcards={this.saveEditedFlashcards} />
       case 'practice':
-        return <Practice />
+        return <Practice flashcards={this.state.flashcards} />
       default:
         return <MyFlashcards
           flashcards={this.state.flashcards}
