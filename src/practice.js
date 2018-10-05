@@ -2,14 +2,16 @@ import React from 'react'
 
 const style = {
   arrowleft: {
+    color: 'black',
     position: 'absolute',
-    top: '150px',
-    left: '100px'
+    top: '45%',
+    left: '10%'
   },
   arrowright: {
+    color: 'black',
     position: 'absolute',
-    top: '150px',
-    right: '100px'
+    top: '45%',
+    right: '10%'
   }
 }
 export default class Practice extends React.Component {
@@ -62,7 +64,7 @@ export default class Practice extends React.Component {
         <div className="jumbotron w-75">
 
           <p>{flashcards[currentCardIndex].question}</p>
-          <a onClick={this.toggleAnswer} className="m-2 btn btn-primary btn-sm" role="button">{anwserButton}</a>
+          <a onClick={this.toggleAnswer} className="m-2 btn btn-dark btn-sm text-secondary" role="button">{anwserButton}</a>
           <p className={anwserDisplay}>{flashcards[currentCardIndex].answer}</p>
 
         </div>
