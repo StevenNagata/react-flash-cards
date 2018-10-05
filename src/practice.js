@@ -1,14 +1,39 @@
 import React from 'react'
 
 export default class Practice extends React.Component {
-
+  constructor(props) {
+    super(props)
+    const stateJson = localStorage.getItem('current-carousel-state')
+    const carouselState = JSON.parse(stateJson) || {}
+    const currentCardIndex = carouselState.currentCardIndex
+    const showAnswer = carouselState.showAnswer
+    this.state = {
+      currentCardIndex: currentCardIndex || 0,
+      showAnswer: showAnswer || false
+    }
+    this.toggleAnswer = this.toggleAnswer.bind(this)
+  }
+  componentDidMount() {
+    window.addEventListener('beforeunload', () => {
+      const { currentCardIndex, showAnswer } = this.state
+      const stateJson = JSON.stringify({ currentCardIndex, showAnswer })
+      localStorage.setItem('current-carousel-state', stateJson)
+    })
+  }
+  toggleAnswer() {
+    this.setState({ showAnswer: !this.state.showAnswer })
+  }
   render() {
+    const { flashcards } = this.props
+    const { currentCardIndex, showAnswer } = this.state
+    const anwserDisplay = showAnswer ? '' : 'd-none'
+    const anwserButton = showAnswer ? 'Hide Answer' : 'Show Answer'
     return (
-      <div className="w-75 container d-flex">
-        <div className="jumbotron">
-          <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-          <a className="btn btn-primary btn-sm m-3" role="button">Show answer</a>
-          <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+      <div className="d-flex justify-content-center">
+        <div className="jumbotron w-75">
+          <p>{flashcards[currentCardIndex].question}</p>
+          <a onClick={this.toggleAnswer} className="m-2 btn btn-primary btn-sm" role="button">{anwserButton}</a>
+          <p className={anwserDisplay}>{flashcards[currentCardIndex].answer}</p>
         </div>
       </div>
     )
