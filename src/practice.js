@@ -28,14 +28,14 @@ export default class Practice extends React.Component {
     })
   }
   previousCard() {
-    let previousIndex = (this.state.currentCardIndex === 0) ? this.props.flashcards.length - 1 : this.state.currentCardIndex - 1
+    const previousIndex = (this.state.currentCardIndex === 0) ? this.props.flashcards.length - 1 : this.state.currentCardIndex - 1
     this.setState({
       currentCardIndex: previousIndex,
       showAnswer: false
     })
   }
   nextCard() {
-    let nextIndex = (this.state.currentCardIndex === (this.props.flashcards.length - 1)) ? 0 : this.state.currentCardIndex + 1
+    const nextIndex = (this.state.currentCardIndex === (this.props.flashcards.length - 1)) ? 0 : this.state.currentCardIndex + 1
     this.setState({
       currentCardIndex: nextIndex,
       showAnswer: false
