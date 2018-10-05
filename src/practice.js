@@ -12,6 +12,11 @@ const style = {
     position: 'absolute',
     top: '45%',
     right: '10%'
+  },
+  outof: {
+    color: 'black',
+    top: '5%',
+    left: '15%'
   }
 }
 export default class Practice extends React.Component {
@@ -21,11 +26,10 @@ export default class Practice extends React.Component {
     const carouselState = JSON.parse(stateJson) || {}
     const currentCardIndex = carouselState.currentCardIndex
     const showAnswer = carouselState.showAnswer
-    const progress = carouselState.progress
     this.state = {
       currentCardIndex: currentCardIndex || 0,
       showAnswer: showAnswer || false,
-      progress: progress || 0
+      progress: Math.round((currentCardIndex / (this.props.flashcards.length - 1)) * 100)
     }
     this.toggleAnswer = this.toggleAnswer.bind(this)
     this.previousCard = this.previousCard.bind(this)
@@ -33,8 +37,8 @@ export default class Practice extends React.Component {
   }
   componentDidMount() {
     window.addEventListener('beforeunload', () => {
-      const { currentCardIndex, showAnswer, progress } = this.state
-      const stateJson = JSON.stringify({ currentCardIndex, showAnswer, progress })
+      const { currentCardIndex, showAnswer } = this.state
+      const stateJson = JSON.stringify({ currentCardIndex, showAnswer })
       localStorage.setItem('current-carousel-state', stateJson)
     })
   }
@@ -43,7 +47,7 @@ export default class Practice extends React.Component {
       this.setState({
         currentCardIndex: this.state.currentCardIndex - 1,
         showAnswer: false,
-        progress: this.state.progress - 1
+        progress: Math.round(((this.state.currentCardIndex - 1) / (this.props.flashcards.length - 1)) * 100)
       })
     }
   }
@@ -52,7 +56,7 @@ export default class Practice extends React.Component {
       this.setState({
         currentCardIndex: this.state.currentCardIndex + 1,
         showAnswer: false,
-        progress: this.state.currentCardIndex + 1
+        progress: Math.round(((this.state.currentCardIndex + 1) / (this.props.flashcards.length - 1)) * 100)
       })
     }
   }
@@ -60,22 +64,32 @@ export default class Practice extends React.Component {
     this.setState({ showAnswer: !this.state.showAnswer })
   }
   render() {
+    const barstyle = {
+      barprogress: {
+        width: this.state.progress + '%'
+      },
+      barback: {
+        border: 'solid black',
+        'borderRadius': '10px / 5px'
+      }
+    }
     const { flashcards } = this.props
     const { currentCardIndex, showAnswer } = this.state
-    const anwserDisplay = showAnswer ? 'm-2' : 'd-none'
+    const anwserDisplay = showAnswer ? 'm-2 text-success' : 'd-none'
     const anwserButton = showAnswer ? 'Hide Answer' : 'Show Answer'
     return (
       <div>
-        <div className="container">
-          <div className="col align-self-center">
-            <div className="progress w-75 m-3">
-              <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
+        <div className="container w-75">
+          <div className="progress-sm m-3" style={barstyle.barback}>
+            <div className=" text-dark progress-bar progress-bar-striped bg-success progress-bar-animated"
+              role="progressbar"
+              style={barstyle.barprogress}>{this.state.progress}%</div>
           </div>
         </div>
         <div className="d-flex justify-content-center position-relative">
           <a onClick={this.previousCard} href="#practice" style={style.arrowleft}>&#10094;&#10094;</a>
           <div className="jumbotron w-75">
+            <a className="position-absolute" style={style.outof}>{this.state.currentCardIndex + 1} / {this.props.flashcards.length}</a>
             <p>{flashcards[currentCardIndex].question}</p>
             <a onClick={this.toggleAnswer} className="m-2 btn btn-dark btn-sm text-secondary" role="button">{anwserButton}</a>
             <p className={anwserDisplay}>{flashcards[currentCardIndex].answer}</p>
