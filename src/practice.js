@@ -59,16 +59,23 @@ export default class Practice extends React.Component {
     const anwserDisplay = showAnswer ? 'm-2' : 'd-none'
     const anwserButton = showAnswer ? 'Hide Answer' : 'Show Answer'
     return (
-      <div className="d-flex justify-content-center position-relative">
-        <a onClick={this.previousCard} href="#practice" style={style.arrowleft}>&#10094;&#10094;</a>
-        <div className="jumbotron w-75">
-
-          <p>{flashcards[currentCardIndex].question}</p>
-          <a onClick={this.toggleAnswer} className="m-2 btn btn-dark btn-sm text-secondary" role="button">{anwserButton}</a>
-          <p className={anwserDisplay}>{flashcards[currentCardIndex].answer}</p>
-
+      <div>
+        <div className="container">
+          <div className="col align-self-center">
+            <div className="progress w-75 m-3">
+              <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
         </div>
-        <a onClick={this.nextCard} href="#practice" style={style.arrowright}>&#10095;&#10095;</a>
+        <div className="d-flex justify-content-center position-relative">
+          <a onClick={this.previousCard} href="#practice" style={style.arrowleft}>&#10094;&#10094;</a>
+          <div className="jumbotron w-75">
+            <p>{flashcards[currentCardIndex].question}</p>
+            <a onClick={this.toggleAnswer} className="m-2 btn btn-dark btn-sm text-secondary" role="button">{anwserButton}</a>
+            <p className={anwserDisplay}>{flashcards[currentCardIndex].answer}</p>
+          </div>
+          <a onClick={this.nextCard} href="#practice" style={style.arrowright}>&#10095;&#10095;</a>
+        </div>
       </div>
     )
   }
