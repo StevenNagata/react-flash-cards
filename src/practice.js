@@ -34,6 +34,23 @@ export default class Practice extends React.Component {
     this.toggleAnswer = this.toggleAnswer.bind(this)
     this.previousCard = this.previousCard.bind(this)
     this.nextCard = this.nextCard.bind(this)
+    this.handleDifficulty = this.handleDifficulty.bind(this)
+  }
+  handleDifficulty(event) {
+    const flashcards = this.props.flashcards.map(card =>
+      Object.assign({}, card))
+    const { saveFlashcardDifficulty } = this.props
+    const { currentCardIndex } = this.state
+    if (event.target.id === 'easy') {
+      flashcards[currentCardIndex].handleDifficulty = 'easy'
+    }
+    if (event.target.id === 'moderate') {
+      flashcards[currentCardIndex].handleDifficulty = 'moderate'
+    }
+    if (event.target.id === 'hard') {
+      flashcards[currentCardIndex].handleDifficulty = 'hard'
+    }
+    saveFlashcardDifficulty(flashcards)
   }
   componentDidMount() {
     window.addEventListener('beforeunload', () => {
@@ -77,6 +94,22 @@ export default class Practice extends React.Component {
     const { currentCardIndex, showAnswer } = this.state
     const anwserDisplay = showAnswer ? 'm-2 text-success' : 'd-none'
     const anwserButton = showAnswer ? 'Hide Answer' : 'Show Answer'
+    let easy = 'btn btn-secondary'
+    let moderate = 'btn btn-secondary'
+    let hard = 'btn btn-secondary'
+    switch (flashcards[currentCardIndex].handleDifficulty) {
+      case 'easy':
+        easy = 'btn btn-dark'
+        break
+      case 'moderate':
+        moderate = 'btn btn-dark'
+        break
+      case 'hard':
+        hard = 'btn btn-dark'
+        break
+      default:
+        break
+    }
     return (
       <div>
         <div className="container w-75">
@@ -90,6 +123,13 @@ export default class Practice extends React.Component {
           <a onClick={this.previousCard} href="#practice" style={style.arrowleft}>&#10094;&#10094;</a>
           <div className="jumbotron w-75">
             <a className="position-absolute" style={style.outof}>{this.state.currentCardIndex + 1} / {this.props.flashcards.length}</a>
+
+            <div className="btn-group-sm float-right" role="group" aria-label="Basic example">
+              <button onClick={this.handleDifficulty} id="easy" className={easy}>Easy</button>
+              <button onClick={this.handleDifficulty} id="moderate" className={moderate}>Moderate</button>
+              <button onClick={this.handleDifficulty} id="hard" className={hard}>Hard</button>
+            </div>
+
             <p>{flashcards[currentCardIndex].question}</p>
             <a onClick={this.toggleAnswer} className="m-2 btn btn-dark btn-sm text-secondary" role="button">{anwserButton}</a>
             <p className={anwserDisplay}>{flashcards[currentCardIndex].answer}</p>

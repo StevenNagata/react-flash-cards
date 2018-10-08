@@ -25,6 +25,7 @@ export default class App extends React.Component {
     this.takeToForm = this.takeToForm.bind(this)
     this.saveEditedFlashcards = this.saveEditedFlashcards.bind(this)
     this.deleteCard = this.deleteCard.bind(this)
+    this.saveFlashcardDifficulty = this.saveFlashcardDifficulty.bind(this)
   }
   saveEditedFlashcards(editedCard) {
     const { flashcards } = this.state
@@ -63,7 +64,7 @@ export default class App extends React.Component {
           flashcard={flashcard}
           saveEditedFlashcards={this.saveEditedFlashcards} />
       case 'practice':
-        return <Practice flashcards={this.state.flashcards} />
+        return <Practice flashcards={this.state.flashcards} saveFlashcardDifficulty={this.saveFlashcardDifficulty} />
       default:
         return <MyFlashcards
           flashcards={this.state.flashcards}
@@ -92,6 +93,9 @@ export default class App extends React.Component {
       flashcards,
       uniqueId: this.state.uniqueId + 1
     })
+  }
+  saveFlashcardDifficulty(flashcards) {
+    this.setState({ flashcards })
   }
   render() {
     return (
