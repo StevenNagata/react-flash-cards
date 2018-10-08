@@ -37,7 +37,8 @@ export default class Practice extends React.Component {
     this.handleDifficulty = this.handleDifficulty.bind(this)
   }
   handleDifficulty(event) {
-    const { flashcards, saveFlashcardDifficulty } = this.props
+    const flashcards = this.props.flashcards.slice()
+    const { saveFlashcardDifficulty } = this.props
     const { currentCardIndex } = this.state
     if (event.target.id === 'easy') {
       flashcards[currentCardIndex].handleDifficulty = 'easy'
