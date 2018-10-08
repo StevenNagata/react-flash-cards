@@ -19,7 +19,6 @@ export default class FlashcardForm extends React.Component {
   }
   saveEditedCard(event) {
     event.preventDefault()
-    console.log(this.props.flashcard)
     const uniqueId = parseInt(this.props.flashcard.id, 10)
     const editedCard = {
       question: event.target.currentQuestion.value,
