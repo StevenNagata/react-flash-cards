@@ -3,7 +3,6 @@ import Navbar from './nav-bar'
 import hash from './hash'
 import MyFlashcards from './my-flashcards'
 import FlashcardForm from './flashcard-form'
-import EditFlashcard from './edit-flashcard'
 import Practice from './practice'
 
 export default class App extends React.Component {
@@ -56,10 +55,11 @@ export default class App extends React.Component {
       case 'create':
         return <FlashcardForm
           saveFlashcard={this.saveFlashcard}
-          uniqueId={this.state.uniqueId} />
+          uniqueId={this.state.uniqueId}
+          isNew={true} />
       case 'edit':
         const flashcard = this.state.flashcards.find(card => card.id === parseInt(params.uniqueId, 10))
-        return <EditFlashcard
+        return <FlashcardForm
           flashcard={flashcard}
           saveEditedFlashcards={this.saveEditedFlashcards} />
       case 'practice':
