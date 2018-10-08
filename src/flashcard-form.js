@@ -12,7 +12,8 @@ export default class FlashcardForm extends React.Component {
     const newCard = {
       question: event.target.currentQuestion.value,
       answer: event.target.currentAnswer.value,
-      id: uniqueId
+      id: uniqueId,
+      difficulty: null
     }
     event.target.reset()
     this.props.saveFlashcard(newCard)

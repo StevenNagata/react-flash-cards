@@ -34,7 +34,23 @@ export default class Practice extends React.Component {
     this.toggleAnswer = this.toggleAnswer.bind(this)
     this.previousCard = this.previousCard.bind(this)
     this.nextCard = this.nextCard.bind(this)
+    this.handleDifficulty = this.handleDifficulty.bind(this)
   }
+  handleDifficulty(event) {
+    const { flashcards, saveFlashcardDifficulty } = this.props
+    const { currentCardIndex } = this.state
+    if (event.target.id === 'easy') {
+      flashcards[currentCardIndex].handleDifficulty = 'easy'
+    }
+    if (event.target.id === 'moderate') {
+      flashcards[currentCardIndex].handleDifficulty = 'moderate'
+    }
+    if (event.target.id === 'hard') {
+      flashcards[currentCardIndex].handleDifficulty = 'hard'
+    }
+    saveFlashcardDifficulty(flashcards)
+  }
+
   componentDidMount() {
     window.addEventListener('beforeunload', () => {
       const { currentCardIndex, showAnswer } = this.state
@@ -90,6 +106,13 @@ export default class Practice extends React.Component {
           <a onClick={this.previousCard} href="#practice" style={style.arrowleft}>&#10094;&#10094;</a>
           <div className="jumbotron w-75">
             <a className="position-absolute" style={style.outof}>{this.state.currentCardIndex + 1} / {this.props.flashcards.length}</a>
+
+            <div className="btn-group-sm float-right" role="group" aria-label="Basic example">
+              <button onClick={this.handleDifficulty} id="easy" className="btn btn-secondary">Easy</button>
+              <button onClick={this.handleDifficulty} id="moderate" className="btn btn-secondary">Moderate</button>
+              <button onClick={this.handleDifficulty} id="hard" className="btn btn-secondary">Hard</button>
+            </div>
+
             <p>{flashcards[currentCardIndex].question}</p>
             <a onClick={this.toggleAnswer} className="m-2 btn btn-dark btn-sm text-secondary" role="button">{anwserButton}</a>
             <p className={anwserDisplay}>{flashcards[currentCardIndex].answer}</p>
