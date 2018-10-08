@@ -37,7 +37,8 @@ export default class Practice extends React.Component {
     this.handleDifficulty = this.handleDifficulty.bind(this)
   }
   handleDifficulty(event) {
-    const flashcards = this.props.flashcards.slice()
+    const flashcards = this.props.flashcards.map(card =>
+      Object.assign({}, card))
     const { saveFlashcardDifficulty } = this.props
     const { currentCardIndex } = this.state
     if (event.target.id === 'easy') {
@@ -51,7 +52,6 @@ export default class Practice extends React.Component {
     }
     saveFlashcardDifficulty(flashcards)
   }
-
   componentDidMount() {
     window.addEventListener('beforeunload', () => {
       const { currentCardIndex, showAnswer } = this.state
