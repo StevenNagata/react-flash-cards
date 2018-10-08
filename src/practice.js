@@ -93,6 +93,22 @@ export default class Practice extends React.Component {
     const { currentCardIndex, showAnswer } = this.state
     const anwserDisplay = showAnswer ? 'm-2 text-success' : 'd-none'
     const anwserButton = showAnswer ? 'Hide Answer' : 'Show Answer'
+    let easy = 'btn btn-secondary'
+    let moderate = 'btn btn-secondary'
+    let hard = 'btn btn-secondary'
+    switch (flashcards[currentCardIndex].handleDifficulty) {
+      case 'easy':
+        easy = 'btn btn-dark'
+        break
+      case 'moderate':
+        moderate = 'btn btn-dark'
+        break
+      case 'hard':
+        hard = 'btn btn-dark'
+        break
+      default:
+        break
+    }
     return (
       <div>
         <div className="container w-75">
@@ -108,9 +124,9 @@ export default class Practice extends React.Component {
             <a className="position-absolute" style={style.outof}>{this.state.currentCardIndex + 1} / {this.props.flashcards.length}</a>
 
             <div className="btn-group-sm float-right" role="group" aria-label="Basic example">
-              <button onClick={this.handleDifficulty} id="easy" className="btn btn-secondary">Easy</button>
-              <button onClick={this.handleDifficulty} id="moderate" className="btn btn-secondary">Moderate</button>
-              <button onClick={this.handleDifficulty} id="hard" className="btn btn-secondary">Hard</button>
+              <button onClick={this.handleDifficulty} id="easy" className={easy}>Easy</button>
+              <button onClick={this.handleDifficulty} id="moderate" className={moderate}>Moderate</button>
+              <button onClick={this.handleDifficulty} id="hard" className={hard}>Hard</button>
             </div>
 
             <p>{flashcards[currentCardIndex].question}</p>
