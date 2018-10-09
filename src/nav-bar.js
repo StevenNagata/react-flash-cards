@@ -8,16 +8,7 @@ export default function Navbar() {
         <div className="navbar-nav">
           <a className="nav-item nav-link" href="#view">Cards</a>
           <a className="nav-item nav-link" href="#create">Create</a>
-          <li className="nav-item dropdown">
-            <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Practice</a>
-            <div className="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-              <a className="dropdown-item text-success" href="#practice?difficulty=easy">Easy</a>
-              <a className="dropdown-item text-warning" href="#practice?difficulty=moderate">Moderate</a>
-              <a className="dropdown-item text-danger" href="#practice?difficulty=hard">Hard</a>
-              <a className="dropdown-item text-primary" href="#practice">All</a>
-            </div>
-          </li>
+          <a className="nav-item nav-link" href="#practice">Practice</a>
         </div>
       </div>
     </nav>
