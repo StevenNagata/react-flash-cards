@@ -13,6 +13,43 @@ export default class FlashcardForm extends React.Component {
     this.saveEditedCard = this.saveEditedCard.bind(this)
     this.highlight = this.highlight.bind(this)
   }
+  componentDidMount() {
+    console.log(this.props.flashcard.difficulty)
+    if (!this.props.isNew) {
+      if (this.props.flashcard.difficulty === 'easy') {
+        this.setState({
+          isEasy: true,
+          isModerate: false,
+          isHard: false,
+          difficulty: 'easy'
+        })
+      }
+      else if (this.props.flashcard.difficulty === 'moderate') {
+        this.setState({
+          isEasy: false,
+          isModerate: true,
+          isHard: false,
+          difficulty: 'moderate'
+        })
+      }
+      else if (this.props.flashcard.difficulty === 'hard') {
+        this.setState({
+          isEasy: false,
+          isModerate: false,
+          isHard: true,
+          difficulty: 'hard'
+        })
+      }
+      else {
+        this.setState({
+          isEasy: false,
+          isModerate: false,
+          isHard: false,
+          difficulty: 'none'
+        })
+      }
+    }
+  }
   highlight(event) {
     if (event.target.name === 'easy') {
       this.setState({
@@ -64,7 +101,8 @@ export default class FlashcardForm extends React.Component {
     const editedCard = {
       question: event.target.currentQuestion.value,
       answer: event.target.currentAnswer.value,
-      id: uniqueId
+      id: uniqueId,
+      difficulty: this.state.difficulty
     }
     this.props.saveEditedFlashcards(editedCard, uniqueId)
   }
