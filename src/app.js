@@ -114,20 +114,3 @@ export default class App extends React.Component {
     )
   }
 }
-
-// case 'practice':
-// let filteredFlashcards = []
-// switch (params.difficulty) {
-//   case 'easy':
-//     filteredFlashcards = this.state.flashcards.map(card => card.difficulty === 'easy')
-//     break
-//   case 'moderate':
-//     filteredFlashcards = this.state.flashcards.map(card => card.difficulty === 'moderate')
-//     break
-//   case 'hard':
-//     filteredFlashcards = this.state.flashcards.map(card => card.difficulty === 'hard')
-//     break
-//   default:
-//     filteredFlashcards = this.state.flashcards
-//     break
-// }

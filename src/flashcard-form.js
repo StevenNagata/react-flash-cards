@@ -14,7 +14,6 @@ export default class FlashcardForm extends React.Component {
     this.highlight = this.highlight.bind(this)
   }
   componentDidMount() {
-    console.log(this.props.flashcard.difficulty)
     if (!this.props.isNew) {
       if (this.props.flashcard.difficulty === 'easy') {
         this.setState({
@@ -113,9 +112,9 @@ export default class FlashcardForm extends React.Component {
     const defaultQuestion = this.props.isNew ? '' : this.props.flashcard.question
     const defaultAnswer = this.props.isNew ? '' : this.props.flashcard.answer
     const handleSubmit = this.props.isNew ? this.saveCard : this.saveEditedCard
-    const classEasy = isEasy ? 'btn btn-secondary text-success bg-dark' : 'btn btn-secondary text-dark'
-    const classModerate = isModerate ? 'btn btn-secondary text-success bg-dark' : 'btn btn-secondary text-dark'
-    const classHard = isHard ? 'btn btn-secondary text-success bg-dark' : 'btn btn-secondary text-dark'
+    const classEasy = isEasy ? 'btn btn-secondary text-secondary bg-dark' : 'btn btn-secondary text-dark'
+    const classModerate = isModerate ? 'btn btn-secondary text-secondary bg-dark' : 'btn btn-secondary text-dark'
+    const classHard = isHard ? 'btn btn-secondary text-secondary bg-dark' : 'btn btn-secondary text-dark'
     return (
       <div className="container-fluid w-50 p-4 rounded">
         <form onSubmit={handleSubmit}>
