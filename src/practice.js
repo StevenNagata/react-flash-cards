@@ -5,18 +5,18 @@ const style = {
     color: 'black',
     position: 'absolute',
     top: '35%',
-    left: '8%'
+    left: '20%'
   },
   arrowright: {
     color: 'black',
     position: 'absolute',
     top: '35%',
-    right: '8%'
+    right: '20%'
   },
   outof: {
     color: 'black',
     top: '5%',
-    left: '15%'
+    left: '27%'
   }
 }
 export default class Practice extends React.Component {
@@ -132,7 +132,7 @@ export default class Practice extends React.Component {
             </div>
           </div>
 
-          <div className="container w-75">
+          <div className="container w-50">
             <div className="progress-sm m-3" style={barstyle.barback}>
               <div className=" text-secondary progress-bar progress-bar-striped bg-dark progress-bar-animated"
                 role="progressbar"
@@ -141,7 +141,7 @@ export default class Practice extends React.Component {
           </div>
           <div className="d-flex justify-content-center position-relative">
             <a onClick={this.previousCard} className="btn btn-dark btn-sm text-secondary" style={style.arrowleft}>&#10094;&#10094;</a>
-            <div className="jumbotron w-75">
+            <div className="jumbotron w-50">
               <a className="position-absolute" style={style.outof}>{this.state.currentCardIndex + 1} / {this.state.flashcards.length}</a>
               <p>{flashcards[currentCardIndex].question}</p>
               <a onClick={this.toggleAnswer} className="m-2 btn btn-dark btn-sm text-secondary" role="button">{anwserButton}</a>

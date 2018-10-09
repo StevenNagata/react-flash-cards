@@ -1,79 +1,30 @@
 import React from 'react'
 
+function Difficulty({ difficulty, isHighlighted, onClick, children }) {
+  const className = isHighlighted
+    ? 'btn btn-secondary text-secondary bg-dark'
+    : 'btn btn-secondary text-dark'
+  return (
+    <button type="button" className={className} onClick={onClick} data-difficulty={difficulty}>
+      {children}
+    </button>
+  )
+}
+
 export default class FlashcardForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isEasy: false,
-      isModerate: false,
-      isHard: false,
-      difficulty: 'none'
+      difficulty: this.props.isNew ? null : this.props.flashcard.difficulty
     }
     this.saveCard = this.saveCard.bind(this)
     this.saveEditedCard = this.saveEditedCard.bind(this)
     this.highlight = this.highlight.bind(this)
   }
-  componentDidMount() {
-    if (!this.props.isNew) {
-      if (this.props.flashcard.difficulty === 'easy') {
-        this.setState({
-          isEasy: true,
-          isModerate: false,
-          isHard: false,
-          difficulty: 'easy'
-        })
-      }
-      else if (this.props.flashcard.difficulty === 'moderate') {
-        this.setState({
-          isEasy: false,
-          isModerate: true,
-          isHard: false,
-          difficulty: 'moderate'
-        })
-      }
-      else if (this.props.flashcard.difficulty === 'hard') {
-        this.setState({
-          isEasy: false,
-          isModerate: false,
-          isHard: true,
-          difficulty: 'hard'
-        })
-      }
-      else {
-        this.setState({
-          isEasy: false,
-          isModerate: false,
-          isHard: false,
-          difficulty: 'none'
-        })
-      }
-    }
-  }
   highlight(event) {
-    if (event.target.name === 'easy') {
-      this.setState({
-        isEasy: true,
-        isModerate: false,
-        isHard: false,
-        difficulty: 'easy'
-      })
-    }
-    else if (event.target.name === 'moderate') {
-      this.setState({
-        isEasy: false,
-        isModerate: true,
-        isHard: false,
-        difficulty: 'moderate'
-      })
-    }
-    else {
-      this.setState({
-        isEasy: false,
-        isModerate: false,
-        isHard: true,
-        difficulty: 'hard'
-      })
-    }
+    this.setState({
+      difficulty: event.target.getAttribute('data-difficulty')
+    })
   }
   saveCard(event) {
     event.preventDefault()
@@ -107,14 +58,10 @@ export default class FlashcardForm extends React.Component {
   }
 
   render() {
-    const { isEasy, isModerate, isHard } = this.state
     const title = this.props.isNew ? 'Create a Flash Card' : 'Edit Flash Card'
     const defaultQuestion = this.props.isNew ? '' : this.props.flashcard.question
     const defaultAnswer = this.props.isNew ? '' : this.props.flashcard.answer
     const handleSubmit = this.props.isNew ? this.saveCard : this.saveEditedCard
-    const classEasy = isEasy ? 'btn btn-secondary text-secondary bg-dark' : 'btn btn-secondary text-dark'
-    const classModerate = isModerate ? 'btn btn-secondary text-secondary bg-dark' : 'btn btn-secondary text-dark'
-    const classHard = isHard ? 'btn btn-secondary text-secondary bg-dark' : 'btn btn-secondary text-dark'
     return (
       <div className="container-fluid w-50 p-4 rounded">
         <form onSubmit={handleSubmit}>
@@ -130,9 +77,24 @@ export default class FlashcardForm extends React.Component {
           <h3 className="d-flex justify-content-center" >Choose Difficulty</h3>
           <div className="d-flex justify-content-center p-2">
             <div className="btn-group-sm" role="group" aria-label="Basic example">
-              <button onClick={this.highlight} type="button" name="easy" className={classEasy}>Easy</button>
-              <button onClick={this.highlight} type="button" name="moderate" className={classModerate}>Moderate</button>
-              <button onClick={this.highlight} type="button" name="hard" className={classHard}>Hard</button>
+              <Difficulty
+                difficulty="easy"
+                onClick={this.highlight}
+                isHighlighted={this.state.difficulty === 'easy'}>
+                Easy
+              </Difficulty>
+              <Difficulty
+                difficulty="moderate"
+                onClick={this.highlight}
+                isHighlighted={this.state.difficulty === 'moderate'}>
+                Moderate
+              </Difficulty>
+              <Difficulty
+                difficulty="hard"
+                onClick={this.highlight}
+                isHighlighted={this.state.difficulty === 'hard'}>
+                Hard
+              </Difficulty>
             </div>
           </div>
           <div className="d-flex justify-content-center p-2">
