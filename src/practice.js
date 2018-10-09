@@ -5,13 +5,13 @@ const style = {
     color: 'black',
     position: 'absolute',
     top: '35%',
-    left: '10%'
+    left: '8%'
   },
   arrowright: {
     color: 'black',
     position: 'absolute',
     top: '35%',
-    right: '10%'
+    right: '8%'
   },
   outof: {
     color: 'black',
@@ -116,9 +116,9 @@ export default class Practice extends React.Component {
       return <div>You have no cards at this difficulty</div>
     }
     else {
-      const classEasy = (this.state.difficulty === 'easy') ? 'btn btn-secondary text-secondary bg-dark' : 'btn btn-secondary text-dark'
-      const classModerate = (this.state.difficulty === 'moderate') ? 'btn btn-secondary text-secondary bg-dark' : 'btn btn-secondary text-dark'
-      const classHard = (this.state.difficulty === 'hard') ? 'btn btn-secondary text-secondary bg-dark' : 'btn btn-secondary text-dark'
+      const classEasy = (this.state.difficulty === 'easy') ? 'btn btn-secondary text-success bg-dark' : 'btn btn-secondary text-dark'
+      const classModerate = (this.state.difficulty === 'moderate') ? 'btn btn-secondary text-warning bg-dark' : 'btn btn-secondary text-dark'
+      const classHard = (this.state.difficulty === 'hard') ? 'btn btn-secondary text-danger bg-dark' : 'btn btn-secondary text-dark'
       const classAll = (this.state.difficulty === 'all') ? 'btn btn-secondary text-secondary bg-dark' : 'btn btn-secondary text-dark'
       return (
         <div>
@@ -140,14 +140,14 @@ export default class Practice extends React.Component {
             </div>
           </div>
           <div className="d-flex justify-content-center position-relative">
-            <a onClick={this.previousCard} className="btn btn-dark text-secondary" style={style.arrowleft}>&#10094;&#10094;</a>
+            <a onClick={this.previousCard} className="btn btn-dark btn-sm text-secondary" style={style.arrowleft}>&#10094;&#10094;</a>
             <div className="jumbotron w-75">
               <a className="position-absolute" style={style.outof}>{this.state.currentCardIndex + 1} / {this.state.flashcards.length}</a>
               <p>{flashcards[currentCardIndex].question}</p>
               <a onClick={this.toggleAnswer} className="m-2 btn btn-dark btn-sm text-secondary" role="button">{anwserButton}</a>
               <p className={anwserDisplay}>{flashcards[currentCardIndex].answer}</p>
             </div>
-            <a onClick={this.nextCard} className="btn btn-dark text-secondary" style={style.arrowright}>&#10095;&#10095;</a>
+            <a onClick={this.nextCard} className="btn btn-dark btn-sm text-secondary" style={style.arrowright}>&#10095;&#10095;</a>
           </div>
         </div>
       )

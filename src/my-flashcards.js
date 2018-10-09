@@ -35,8 +35,8 @@ export default class MyFlashcards extends React.Component {
                       <p className="card-text m-1">{card.question}</p>
                       <hr />
                       <p className="card-text text-success m-1">{card.answer}</p>
-                      <a style={style.editIcon} href={href}>&#9999;</a>
-                      <a onClick={() => this.props.deleteCard(id)} href="#view" style={style.deleteIcon}>&#10007;</a>
+                      <a className="text-dark" style={style.editIcon} href={href}><strong>&#9998;</strong></a>
+                      <a className="text-dark" onClick={() => this.props.deleteCard(id)} href="#view" style={style.deleteIcon}>&#10005;</a>
                     </div>
                   </div>
                 )
