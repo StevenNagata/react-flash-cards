@@ -94,7 +94,15 @@ export default class App extends React.Component {
       uniqueId: this.state.uniqueId + 1
     })
   }
-  saveFlashcardDifficulty(flashcards) {
+  saveFlashcardDifficulty(updatedFlashcard) {
+    const flashcards = this.state.flashcards.map((card) => {
+      if (card.id === updatedFlashcard.id) {
+        return updatedFlashcard
+      }
+      else {
+        return card
+      }
+    })
     this.setState({ flashcards })
   }
   render() {

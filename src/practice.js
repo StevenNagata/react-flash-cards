@@ -4,19 +4,19 @@ const style = {
   arrowleft: {
     color: 'black',
     position: 'absolute',
-    top: '45%',
-    left: '10%'
+    top: '35%',
+    left: '20%'
   },
   arrowright: {
     color: 'black',
     position: 'absolute',
-    top: '45%',
-    right: '10%'
+    top: '35%',
+    right: '20%'
   },
   outof: {
     color: 'black',
     top: '5%',
-    left: '15%'
+    left: '27%'
   }
 }
 export default class Practice extends React.Component {
@@ -25,55 +25,74 @@ export default class Practice extends React.Component {
     const stateJson = localStorage.getItem('current-carousel-state')
     const carouselState = JSON.parse(stateJson) || {}
     const currentCardIndex = carouselState.currentCardIndex
-    const showAnswer = carouselState.showAnswer
     this.state = {
-      currentCardIndex: currentCardIndex || 0,
-      showAnswer: showAnswer || false,
-      progress: Math.round((currentCardIndex / (this.props.flashcards.length - 1)) * 100)
+      flashcards: this.props.flashcards,
+      currentCardIndex: 0,
+      showAnswer: false,
+      difficulty: 'all',
+      progress: Math.round((1 / this.props.flashcards.length + (currentCardIndex / (this.props.flashcards.length))) * 100)
     }
     this.toggleAnswer = this.toggleAnswer.bind(this)
     this.previousCard = this.previousCard.bind(this)
     this.nextCard = this.nextCard.bind(this)
-    this.handleDifficulty = this.handleDifficulty.bind(this)
+    this.highlightAndFilter = this.highlightAndFilter.bind(this)
   }
-  handleDifficulty(event) {
-    const flashcards = this.props.flashcards.map(card =>
-      Object.assign({}, card))
-    const { saveFlashcardDifficulty } = this.props
-    const { currentCardIndex } = this.state
-    if (event.target.id === 'easy') {
-      flashcards[currentCardIndex].handleDifficulty = 'easy'
+  highlightAndFilter(event) {
+    if (event.target.name === 'easy') {
+      const flashcards = this.props.flashcards.filter(card => card.difficulty === 'easy')
+      this.setState({
+        flashcards: flashcards,
+        difficulty: 'easy',
+        showAnswer: false,
+        currentCardIndex: 0,
+        progress: Math.round((1 / flashcards.length) * 100)
+      })
     }
-    if (event.target.id === 'moderate') {
-      flashcards[currentCardIndex].handleDifficulty = 'moderate'
+    else if (event.target.name === 'moderate') {
+      const flashcards = this.props.flashcards.filter(card => card.difficulty === 'moderate')
+      this.setState({
+        flashcards: flashcards,
+        difficulty: 'moderate',
+        showAnswer: false,
+        currentCardIndex: 0,
+        progress: Math.round((1 / flashcards.length) * 100)
+      })
     }
-    if (event.target.id === 'hard') {
-      flashcards[currentCardIndex].handleDifficulty = 'hard'
+    else if (event.target.name === 'hard') {
+      const flashcards = this.props.flashcards.filter(card => card.difficulty === 'hard')
+      this.setState({
+        flashcards: flashcards,
+        difficulty: 'hard',
+        showAnswer: false,
+        currentCardIndex: 0,
+        progress: Math.round((1 / flashcards.length) * 100)
+      })
     }
-    saveFlashcardDifficulty(flashcards)
-  }
-  componentDidMount() {
-    window.addEventListener('beforeunload', () => {
-      const { currentCardIndex, showAnswer } = this.state
-      const stateJson = JSON.stringify({ currentCardIndex, showAnswer })
-      localStorage.setItem('current-carousel-state', stateJson)
-    })
+    else {
+      this.setState({
+        flashcards: this.props.flashcards,
+        difficulty: 'all',
+        showAnswer: false,
+        currentCardIndex: 0,
+        progress: Math.round((1 / this.props.flashcards.length) * 100)
+      })
+    }
   }
   previousCard() {
     if (this.state.currentCardIndex !== 0) {
       this.setState({
         currentCardIndex: this.state.currentCardIndex - 1,
         showAnswer: false,
-        progress: Math.round(((this.state.currentCardIndex - 1) / (this.props.flashcards.length - 1)) * 100)
+        progress: Math.round((1 / this.state.flashcards.length + ((this.state.currentCardIndex - 1) / (this.state.flashcards.length))) * 100)
       })
     }
   }
   nextCard() {
-    if (this.state.currentCardIndex !== (this.props.flashcards.length - 1)) {
+    if (this.state.currentCardIndex !== (this.state.flashcards.length - 1)) {
       this.setState({
         currentCardIndex: this.state.currentCardIndex + 1,
         showAnswer: false,
-        progress: Math.round(((this.state.currentCardIndex + 1) / (this.props.flashcards.length - 1)) * 100)
+        progress: Math.round((1 / this.state.flashcards.length + ((this.state.currentCardIndex + 1) / (this.state.flashcards.length))) * 100)
       })
     }
   }
@@ -90,53 +109,48 @@ export default class Practice extends React.Component {
         'borderRadius': '10px / 5px'
       }
     }
-    const { flashcards } = this.props
-    const { currentCardIndex, showAnswer } = this.state
-    const anwserDisplay = showAnswer ? 'm-2 text-success' : 'd-none'
+    const { currentCardIndex, showAnswer, flashcards } = this.state
+    const anwserDisplay = showAnswer ? 'm-2 text-dark' : 'd-none'
     const anwserButton = showAnswer ? 'Hide Answer' : 'Show Answer'
-    let easy = 'btn btn-secondary'
-    let moderate = 'btn btn-secondary'
-    let hard = 'btn btn-secondary'
-    switch (flashcards[currentCardIndex].handleDifficulty) {
-      case 'easy':
-        easy = 'btn btn-dark'
-        break
-      case 'moderate':
-        moderate = 'btn btn-dark'
-        break
-      case 'hard':
-        hard = 'btn btn-dark'
-        break
-      default:
-        break
+    if (this.props.flashcards.length === 0) {
+      return <div>You have no cards at this difficulty</div>
     }
-    return (
-      <div>
-        <div className="container w-75">
-          <div className="progress-sm m-3" style={barstyle.barback}>
-            <div className=" text-dark progress-bar progress-bar-striped bg-success progress-bar-animated"
-              role="progressbar"
-              style={barstyle.barprogress}>{this.state.progress}%</div>
-          </div>
-        </div>
-        <div className="d-flex justify-content-center position-relative">
-          <a onClick={this.previousCard} href="#practice" style={style.arrowleft}>&#10094;&#10094;</a>
-          <div className="jumbotron w-75">
-            <a className="position-absolute" style={style.outof}>{this.state.currentCardIndex + 1} / {this.props.flashcards.length}</a>
-
-            <div className="btn-group-sm float-right" role="group" aria-label="Basic example">
-              <button onClick={this.handleDifficulty} id="easy" className={easy}>Easy</button>
-              <button onClick={this.handleDifficulty} id="moderate" className={moderate}>Moderate</button>
-              <button onClick={this.handleDifficulty} id="hard" className={hard}>Hard</button>
+    else {
+      const classEasy = (this.state.difficulty === 'easy') ? 'btn btn-secondary text-success bg-dark' : 'btn btn-secondary text-dark'
+      const classModerate = (this.state.difficulty === 'moderate') ? 'btn btn-secondary text-warning bg-dark' : 'btn btn-secondary text-dark'
+      const classHard = (this.state.difficulty === 'hard') ? 'btn btn-secondary text-danger bg-dark' : 'btn btn-secondary text-dark'
+      const classAll = (this.state.difficulty === 'all') ? 'btn btn-secondary text-secondary bg-dark' : 'btn btn-secondary text-dark'
+      return (
+        <div>
+          <h3 className="d-flex justify-content-center" >Practice Difficulty</h3>
+          <div className="d-flex justify-content-center p-2">
+            <div className="btn-group-sm" role="group" aria-label="Basic example">
+              <button onClick={this.highlightAndFilter} type="button" name="easy" className={classEasy}>Easy</button>
+              <button onClick={this.highlightAndFilter} type="button" name="moderate" className={classModerate}>Moderate</button>
+              <button onClick={this.highlightAndFilter} type="button" name="hard" className={classHard}>Hard</button>
+              <button onClick={this.highlightAndFilter} type="button" name="all" className={classAll}>All</button>
             </div>
-
-            <p>{flashcards[currentCardIndex].question}</p>
-            <a onClick={this.toggleAnswer} className="m-2 btn btn-dark btn-sm text-secondary" role="button">{anwserButton}</a>
-            <p className={anwserDisplay}>{flashcards[currentCardIndex].answer}</p>
           </div>
-          <a onClick={this.nextCard} href="#practice" style={style.arrowright}>&#10095;&#10095;</a>
+
+          <div className="container w-50">
+            <div className="progress-sm m-3" style={barstyle.barback}>
+              <div className=" text-secondary progress-bar progress-bar-striped bg-dark progress-bar-animated"
+                role="progressbar"
+                style={barstyle.barprogress}>{this.state.progress}%</div>
+            </div>
+          </div>
+          <div className="d-flex justify-content-center position-relative">
+            <a onClick={this.previousCard} className="btn btn-dark btn-sm text-secondary" style={style.arrowleft}>&#10094;&#10094;</a>
+            <div className="jumbotron w-50">
+              <a className="position-absolute" style={style.outof}>{this.state.currentCardIndex + 1} / {this.state.flashcards.length}</a>
+              <p>{flashcards[currentCardIndex].question}</p>
+              <a onClick={this.toggleAnswer} className="m-2 btn btn-dark btn-sm text-secondary" role="button">{anwserButton}</a>
+              <p className={anwserDisplay}>{flashcards[currentCardIndex].answer}</p>
+            </div>
+            <a onClick={this.nextCard} className="btn btn-dark btn-sm text-secondary" style={style.arrowright}>&#10095;&#10095;</a>
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 }

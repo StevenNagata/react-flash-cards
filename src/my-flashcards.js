@@ -4,13 +4,22 @@ import NoFlashcards from './no-flashcards'
 const style = {
   editIcon: {
     position: 'absolute',
-    right: '1rem',
-    bottom: '1rem'
+    right: '.8rem',
+    bottom: '.8rem'
   },
   deleteIcon: {
     position: 'absolute',
-    right: '1rem',
-    top: '1rem'
+    right: '.8rem',
+    top: '.8rem'
+  },
+  diff: {
+    display: 'inline-block',
+    width: '15px',
+    height: '15px',
+    'border-radius': '50%',
+    position: 'absolute',
+    left: '.7rem',
+    top: '.7rem'
   }
 }
 
@@ -29,13 +38,30 @@ export default class MyFlashcards extends React.Component {
               this.props.flashcards.map((card) => {
                 const id = card.id
                 const href = `#edit?uniqueId=${id}`
+                let diff = ''
+                if (card.difficulty === 'easy') {
+                  diff = 'bg-success'
+                }
+                else if (card.difficulty === 'moderate') {
+                  diff = 'bg-warning'
+                }
+                else if (card.difficulty === 'hard') {
+                  diff = 'bg-danger'
+                }
+                else {
+                  diff = 'bg-dark'
+                }
                 return (
-                  <div id={id} key={id} className="card bg-light mb-3 m-3 w-25">
+                  <div id={id} key={id} className="card bg-light mb-3 m-3 w-100">
                     <div className="card-body">
-                      <p className="card-text m-1">{card.question}</p>
-                      <p className="card-text text-success m-1">{card.answer}</p>
-                      <a style={style.editIcon} href={href}>&#9999;</a>
-                      <a onClick={() => this.props.deleteCard(id)} href="#view" style={style.deleteIcon}>&#10007;</a>
+                      <h5 className="card-text m-1 p-1">{card.question}</h5>
+                      <hr />
+                      <textarea className="ml-2" rows="4" cols="100" style={{ border: 'none' }}>{card.answer}</textarea>
+                      <a className="text-dark"
+                        style={style.editIcon}
+                        href={href}><strong>&#9998;</strong></a>
+                      <a className={diff} style={style.diff}></a>
+                      <a className="text-dark" onClick={() => this.props.deleteCard(id)} href="#view" style={style.deleteIcon}>&#10005;</a>
                     </div>
                   </div>
                 )
