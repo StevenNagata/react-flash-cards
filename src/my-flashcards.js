@@ -54,9 +54,9 @@ export default class MyFlashcards extends React.Component {
                 return (
                   <div id={id} key={id} className="card bg-light mb-3 m-3 w-100">
                     <div className="card-body">
-                      <h3 className="card-text m-1">{card.question}</h3>
+                      <h5 className="card-text m-1 p-1">{card.question}</h5>
                       <hr />
-                      <textarea rows="4" cols="100" style={{ border: 'none' }}>{card.answer}</textarea>
+                      <textarea className="ml-2" rows="4" cols="100" style={{ border: 'none' }}>{card.answer}</textarea>
                       <a className="text-dark"
                         style={style.editIcon}
                         href={href}><strong>&#9998;</strong></a>
