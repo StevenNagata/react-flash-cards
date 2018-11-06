@@ -17,6 +17,10 @@ const style = {
     color: 'black',
     top: '5%',
     left: '27%'
+  },
+  div: {
+    display: 'block',
+    textAlign: 'center'
   }
 }
 export default class Practice extends React.Component {
@@ -36,6 +40,11 @@ export default class Practice extends React.Component {
     this.previousCard = this.previousCard.bind(this)
     this.nextCard = this.nextCard.bind(this)
     this.highlightAndFilter = this.highlightAndFilter.bind(this)
+  }
+  componentDidMount() {
+    this.setState({
+      progress: Math.round((1 / this.state.flashcards.length + (0 / (this.state.flashcards.length))) * 100)
+    })
   }
   highlightAndFilter(event) {
     if (event.target.name === 'easy') {
@@ -112,8 +121,23 @@ export default class Practice extends React.Component {
     const { currentCardIndex, showAnswer, flashcards } = this.state
     const anwserDisplay = showAnswer ? 'm-2 text-dark' : 'd-none'
     const anwserButton = showAnswer ? 'Hide Answer' : 'Show Answer'
-    if (this.props.flashcards.length === 0) {
-      return <div>You have no cards at this difficulty</div>
+    if (this.state.flashcards.length === 0) {
+      return (
+        <div style={style.div}>
+          <h3>Practice Difficulty</h3>
+          <div className="p-2">
+            <div className="btn-group-sm" role="group" aria-label="Basic example">
+              <button onClick={this.highlightAndFilter} type="button" name="easy" className='btn btn-secondary text-dark'>Easy</button>
+              <button onClick={this.highlightAndFilter} type="button" name="moderate" className='btn btn-secondary text-dark'>Moderate</button>
+              <button onClick={this.highlightAndFilter} type="button" name="hard" className='btn btn-secondary text-dark'>Hard</button>
+              <button onClick={this.highlightAndFilter} type="button" name="all" className='btn btn-secondary text-dark'>All</button>
+            </div>
+            <div>
+              <h3 className='m-3' style={style.div} >You have no flash cards at this level</h3>
+            </div>
+          </div>
+        </div>
+      )
     }
     else {
       const classEasy = (this.state.difficulty === 'easy') ? 'btn btn-secondary text-success bg-dark' : 'btn btn-secondary text-dark'
