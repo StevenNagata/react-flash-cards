@@ -5,17 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server",
-    "build": "webpack src/index.js --output main.js",
+    "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.html": [
       "htmlhint"
@@ -45,7 +40,6 @@
     "eslint-plugin-react": "7.10.0",
     "eslint-plugin-standard": "3.1.0",
     "htmlhint": "0.9.13",
-    "husky": "1.0.0-rc.13",
     "lint-staged": "7.2.2",
     "stylelint": "9.4.0",
     "stylelint-config-standard": "18.2.0"

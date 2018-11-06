@@ -16,10 +16,13 @@ const style = {
     display: 'inline-block',
     width: '15px',
     height: '15px',
-    'border-radius': '50%',
+    'borderRadius': '50%',
     position: 'absolute',
     left: '.7rem',
     top: '.7rem'
+  },
+  text: {
+    border: 'none'
   }
 }
 
@@ -56,7 +59,7 @@ export default class MyFlashcards extends React.Component {
                     <div className="card-body">
                       <h5 className="card-text m-1 p-1">{card.question}</h5>
                       <hr />
-                      <textarea className="ml-2" rows="4" cols="100" style={{ border: 'none' }}>{card.answer}</textarea>
+                      <textarea className="ml-2" readOnly rows="4" cols="100" value={card.answer} style={style.text}/>
                       <a className="text-dark"
                         style={style.editIcon}
                         href={href}><strong>&#9998;</strong></a>
